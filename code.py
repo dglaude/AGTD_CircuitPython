@@ -306,8 +306,8 @@ def loop():                         ### void loop() {
                                 if(pixelData == pixel_color):   ###                if (pixelData == pixel_color) {
                                     mask_set(k+1)               ###                  mask_set(k+1);
                                     pos_x = k % 64              ###                  pos_x = k % 64;
-                                    m.setTarget(340+(pos_x*8), 158+(pos_y*8), False)    ###  force move here to make sure we go on every pixel ###
-                                    m.move()                    ### force move here to make sure we go on every pixel ###
+#                                    m.setTarget(340+(pos_x*8), 158+(pos_y*8), False)    ###  force move here to make sure we go on every pixel ###
+#                                    m.move()                   ### This is not needed and by not doing it we save a few seconds
                                                                 ###                }
                                 line+=1                         ##_339_##                 line++;
                                 k+=1                            ##_340_##                 k++;
