@@ -12,6 +12,17 @@ from digitalio import DigitalInOut, Direction
 
 import displayio
 
+#for i in range(10):
+#    print(i, end='')
+#    i+=1
+## This print 0123456789
+
+#i=0
+#while (i<10):
+#    print(i, end='')
+#    i+=1
+#    i+=1
+
 colors=[
     0xffffff, 0xededed, 0xd9d9d9, 0xf3e6ff, 0xdcb3ff, 0xc685ff, 0xe6fbff, 0xccf7ff, 0x85ebff, 0xf7ffe6, 0xe6ffb3, 0xd6ff85, 0xffe6e6, 0xffb3b3, 0xff8585,
 	0xb5b5b5, 0x909090, 0x6c6c6c, 0x8800ff, 0x520099, 0x29004d, 0x00d5ff, 0x00aacc, 0x006b80, 0xaaff00, 0x90d900, 0x558000, 0xff0000, 0xcc0012, 0x800000,
@@ -283,13 +294,13 @@ def loop():                         ### void loop() {
                 moveMouseTo(1221, 55)                           ###         moveMouseTo(1221, 55);               //Mouse click on "X" to exit palette
                 delay(delay_mouse)                              ###         delay(delay_mouse);
                                                                 ###
-                for k in range(index, 4097):                    ###         for (int k=index; k<4097; k++) {
+                k = index                                       ##_287_1##         for (int k=index; k<4097; k++) {
+                while (k<4097):                                 ##_287_2##
                     pixelData = image[k]                        ###           byte pixelData = pgm_read_byte_near(image + (image_index*4097)+ k);
                                                                 ###
                     if (pixelData == pixel_color):              ##_295_##           if (pixelData == pixel_color) {
                         pos_x = (k-1) % 64                      ##_296_##             pos_x = (k-1) % 64;
                         pos_y = (k-1) // 64                     ##_297_##             pos_y = (k-1) / 64;
-#                        print("Set ", pos_x, pos_y, pixel_color)
                         m.setTarget(340+(pos_x*8), 158+(pos_y*8), False)                                        ###             MouseTo.setTarget(340+(pos_x*8), 158+(pos_y*8), false);
                         while not m.move(): pass                ###             while (MouseTo.move() == false) {}  delay(70+delay_move);
                         delay(70+delay_move)                    ###
@@ -306,6 +317,8 @@ def loop():                         ### void loop() {
                                 if(pixelData == pixel_color):   ###                if (pixelData == pixel_color) {
                                     mask_set(k+1)               ###                  mask_set(k+1);
                                     pos_x = k % 64              ###                  pos_x = k % 64;
+                                    m.setTarget(340+(pos_x*8), 158+(pos_y*8), False)    ###  force move here to make sure we go on every pixel ###
+                                    m.move()                    ### force move here to make sure we go on every pixel ###
                                                                 ###                }
                                 line+=1                         ##_339_##                 line++;
                                 k+=1                            ##_340_##                 k++;
@@ -317,6 +330,7 @@ def loop():                         ### void loop() {
                             pos_x = (k-1) % 64                  ###               pos_x = (k-1) % 64;
                             m.setTarget(340+(pos_x*8), 158+(pos_y*8), False)    ###               MouseTo.setTarget(340+(pos_x*8), 158+(pos_y*8), false);
                             while not m.move(): pass            ###               while (MouseTo.move() == false) {}  delay(40+delay_move);
+                            delay(40+delay_move)                ###
                                                                 ###             }
                                                                 ###
                         releaseLEFT()                           ###             Mouse.release(MOUSE_LEFT); delay(35+delay_mouse);
@@ -324,6 +338,7 @@ def loop():                         ### void loop() {
                                                                 ###           }
                                                                 ###         }
                                                                 ###       }
+                    k+=1                                        ##_287_3##
                                                                 ###     }
         moveMouseTo(1221, 55);                                  ###     moveMouseTo(1221, 55);      //Mouse click on "X" to exit palette
         delay(delay_mouse);                                     ###     delay(delay_mouse);
