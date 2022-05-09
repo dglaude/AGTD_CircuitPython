@@ -13,12 +13,22 @@ or disable completely the button and use a delay, here 30 seconds before startin
 NO_BUTTON = False
 NO_BUTTON_DELAY = 30
 
+# Special version for PyGamer
+
+The existing code.py is functional and can be adapted for various board with or without button.
+
+But the PyGamer does not have it's button mapped directly to GPIO, so it require special treatement and library.
+
+Since future developement might include hardware detection and displaying the texture on screen if available, I made a special version for the PyGamer
+
+Please use code_pygamer.py and rename it into code.py (overwirting the simple version) if you have a PyGamer (migth work on a PyBadge)
+
 # Usage
 
-From your computer, deposite GTD fils at the root of the CIRCUITPY drive.
-Eject the CircuitPython board from your computer and plug it into the Switch.
-Make sure you are in Game Builder Garage and in edit mode.
-Watch the texture being draw without touching the Switch.
+From your computer, deposite GTD files at the root of the CIRCUITPY drive, if you have none you can use `SwitchColourPatternFixed.GTD` for a first try.
+Once you are ready with one or multiple files, eject the CircuitPython board from your computer and plug it into your Nintendo Switch.
+Make sure you are in Game Builder Garage and in edit mode in a new or existing game.
+Watch the texture being draw without touching the Switch, maybe go get something to drink or do something else, it could take a while.
 
 # Credit and Copyright
 
