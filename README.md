@@ -1,9 +1,15 @@
 # AGTD_CircuitPython
 Translation in CircuitPython of AGTD
 
-# Install and customize the code for your board
+# Install
 
-This require a recent version of CircuitPython (such as 7.3.0-beta.2) and works one a Seeeduino Wio Terminal.
+This require a recent version of CircuitPython (such as 7.3.0-beta.2) and works on a Seeeduino Wio Terminal.
+Do go and acquire a Wio Terminal for this project, check if you don't already have a board that support CircuitPython: https://circuitpython.org/downloads
+If you avoid M0 board, you should be OK with most board that have native USB (=most) and enough memory.
+Don't hesitate to create an issue for a specific board, if I have that in stock I might make a version that work for you, or share your experience if you succeed.
+
+# customize the code for your board
+
 If you don't have a Seeeduino, you can use another board (with enough memory, like an Raspberry Pi Pico), you will just have to modify the button PIN:
 
 BUTTON_PIN = board.BUTTON_3
@@ -30,6 +36,12 @@ Once you are ready with one or multiple files, eject the CircuitPython board fro
 Make sure you are in Game Builder Garage and in edit mode in a new or existing game.
 Watch the texture being draw without touching the Switch, maybe go get something to drink or do something else, it could take a while.
 
+# How to create GTD image and more
+
+To save time in documenting how to create image in the GTD format, please have a look at this excelent port to the Xiao Seeeduino: https://raycardillo.github.io/automatic-gbg-texture-creator/ (see also https://github.com/raycardillo/automatic-gbg-texture-creator).
+
+Since I have a Xiao and it is supported by CircuitPython (https://circuitpython.org/board/seeeduino_xiao/), I might make a version for it too. :-)
+
 # Credit and Copyright
 
 This code a tentative to translate Arduino code into CircuitPython.
@@ -40,3 +52,5 @@ AGTDASAVDCWTSCOVrVam also known more succinctly as AGTD: Automatic GBG Texture D
 v0.7-beta
 Made for Arduino Leonardo by Borri
 Original idea by Scrubz
+
+Also a big thank you to @raycardillo for the Xiao version.
