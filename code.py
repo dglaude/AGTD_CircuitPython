@@ -235,9 +235,11 @@ def setup():                                ### void setup(void) {
             while button.value:
                 led.value = not led.value
                 time.sleep(0.2)                                 ###     delay(500);
+            print("It will start in 30 seconds.")
             led.value = True
             time.sleep(30)
             led.value = False
+            print("Starting.")
 ###   }
 
                                         ###   // First move to get real mouse position
