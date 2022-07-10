@@ -1,33 +1,51 @@
 # AGTD_CircuitPython
 Translation in CircuitPython of AGTD
 
+# History and supported board
+
+Initial release was done for the Seeeduino Wio Terminal (code still available in code_wio_terminal.py).
+Hint on how to use that on a Pico (that does not have a button) were given.
+Later a new release was done specifically for the PyGamer that has special kind of button (not GPIO).
+
+Current release is working on four different board with different MCU and screen:
+* [pygamer](https://circuitpython.org/board/pygamer/)
+* [clue_nrf52840_express](https://circuitpython.org/board/clue_nrf52840_express/)
+* [espressif_esp32s3_usb_otg_n8](https://circuitpython.org/board/espressif_esp32s3_usb_otg_n8/)
+* [adafruit_feather_esp32s3_tft](https://circuitpython.org/board/adafruit_feather_esp32s3_tft/)
+
+Support for the Seeeduino Wio Terminal has not been integrated into the multiboard version (not sure why except that I did not find my board and so I could not test).
+
+My test are mostly done on "CircuitPython 8.0.0-alpha.1" or on the bleeding edge version of CircuitPython, but it should work on CircuitPython 7.3.1 if available for your board.
+
+# Customize the code for other board
+
+If this version fail on your board on a divide by zero error `print(42/0)` this mean your board is not explicitly supported.
+The best way to have support is to add a section in the board detection and select the button and message specific to your board. Scaling factor will depend on your screen resolution, try or do the math. 
+
+```elif board.board_id in ("your_board_id"):
+    MESSAGE="Press A button."
+    SCALE=3
+    NO_BUTTON = False
+    NO_BUTTON_DELAY = 30
+    BUTTON_PIN = board.BUTTON_A
+    PY_GAMER=False```
+
+If you want a new board to be supported, don't hesitate to create an issue for a specific board, if I have that in stock I might make a version that work for you. If you can create the code for your own board, please try submitting it here as a PR so that is can serve other user.
+
 # Install
 
-This require a recent version of CircuitPython (such as 7.3.0-beta.2) and works on a Seeeduino Wio Terminal.
-Do go and acquire a Wio Terminal for this project, check if you don't already have a board that support CircuitPython: https://circuitpython.org/downloads
-If you avoid M0 board, you should be OK with most board that have native USB (=most) and enough memory.
-Don't hesitate to create an issue for a specific board, if I have that in stock I might make a version that work for you, or share your experience if you succeed.
+You wil need the folowing files from this repository:
+* boot.py This define a simple mouse USB HID description that is recognized by the Nintendo Switch
+* code.py This is the main code with board detection
+* mouseto.py Library to handled absolute mouse move like an Arduino library with same name is doing
 
-# customize the code for your board
+The only library required is Adafruit HID library in the form of a folder adafruit_hid and it's content in the lib folder.
+You can get that library [from the source](https://github.com/adafruit/Adafruit_CircuitPython_HID) but best is to install that [with circup](https://learn.adafruit.com/keep-your-circuitpython-libraries-on-devices-up-to-date-with-circup) or getting it from the [library bundle](https://circuitpython.org/libraries).
 
-If you don't have a Seeeduino, you can use another board (with enough memory, like an Raspberry Pi Pico), you will just have to modify the button PIN:
+# Special version
 
-BUTTON_PIN = board.BUTTON_3
-
-or disable completely the button and use a delay, here 30 seconds before starting:
-
-NO_BUTTON = False
-NO_BUTTON_DELAY = 30
-
-# Special version for PyGamer
-
-The existing code.py is functional and can be adapted for various board with or without button.
-
-But the PyGamer does not have it's button mapped directly to GPIO, so it require special treatement and library.
-
-Since future developement might include hardware detection and displaying the texture on screen if available, I made a special version for the PyGamer
-
-Please use code_pygamer.py and rename it into code.py (overwirting the simple version) if you have a PyGamer (migth work on a PyBadge)
+* `code_pygamer.py` is a version for PyGamer that is not needed anymore as that board is supported in main code with auto-detection.
+* `code_wio_terminal.py` is the initial release maybe without graphical interface, could be usefull for adapting for the Raspbery Pi Pico or other very simple board.
 
 # Usage
 
@@ -39,8 +57,6 @@ Watch the texture being draw without touching the Switch, maybe go get something
 # How to create GTD image and more
 
 To save time in documenting how to create image in the GTD format, please have a look at this excelent port to the Xiao Seeeduino: https://raycardillo.github.io/automatic-gbg-texture-creator/ (see also https://github.com/raycardillo/automatic-gbg-texture-creator).
-
-Since I have a Xiao and it is supported by CircuitPython (https://circuitpython.org/board/seeeduino_xiao/), I might make a version for it too. :-)
 
 # Credit and Copyright
 
