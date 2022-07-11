@@ -7,13 +7,12 @@ Initial release was done for the Seeeduino Wio Terminal (code still available in
 Hint on how to use that on a Pico (that does not have a button) were given.
 Later a new release was done specifically for the PyGamer that has special kind of button (not GPIO).
 
-Current release is working on four different board with different MCU and screen:
+Current release is working on many different board with different MCU and screen:
 * [pygamer](https://circuitpython.org/board/pygamer/)
 * [clue_nrf52840_express](https://circuitpython.org/board/clue_nrf52840_express/)
 * [espressif_esp32s3_usb_otg_n8](https://circuitpython.org/board/espressif_esp32s3_usb_otg_n8/)
 * [adafruit_feather_esp32s3_tft](https://circuitpython.org/board/adafruit_feather_esp32s3_tft/)
-
-Support for the Seeeduino Wio Terminal has not been integrated into the multiboard version (not sure why except that I did not find my board and so I could not test).
+* [seeeduino_wio_terminal](https://circuitpython.org/board/seeeduino_wio_terminal/)
 
 My test are mostly done on "CircuitPython 8.0.0-alpha.1" or on the bleeding edge version of CircuitPython, but it should work on CircuitPython 7.3.1 if available for your board.
 
