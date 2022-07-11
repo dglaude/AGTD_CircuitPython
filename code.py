@@ -9,6 +9,7 @@
 #BUTTON_A	"clue_nrf52840_express"
 #BUTTON_OK	"espressif_esp32s3_usb_otg_n8"
 #BUTTON (boot)	"adafruit_feather_esp32s3_tft"
+#???    "seeeduino_wio_terminal"
 #
 # It should be easy to port this to other board, just adding the detection code and selecting the button to use.
 #
@@ -114,11 +115,15 @@ elif board.board_id in ("adafruit_feather_esp32s3_tft"):
     NO_BUTTON_DELAY = 30
     BUTTON_PIN = board.BUTTON
     PY_GAMER=False
-else:
-    MESSAGE="No button, just wait."
+elif board.board_id in ("seeeduino_wio_terminal"):
+    MESSAGE="Press the top left button to start."
     SCALE=3
-    NO_BUTTON = True
-    NO_BUTTON_DELAY = 60
+    NO_BUTTON = False
+    NO_BUTTON_DELAY = 30
+    BUTTON_PIN = board.BUTTON_3
+    PY_GAMER=False
+else:
+    print("Your board " + board.board_id + " is not supported yet, let's trigger an exception.")
     print(42/0)
 
 ###
