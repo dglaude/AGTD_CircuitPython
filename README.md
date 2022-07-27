@@ -21,19 +21,20 @@ My test are mostly done on "CircuitPython 8.0.0-alpha.1" or on the bleeding edge
 If this version fail on your board on a divide by zero error `print(42/0)` this mean your board is not explicitly supported.
 The best way to have support is to add a section in the board detection and select the button and message specific to your board. Scaling factor will depend on your screen resolution, try or do the math. 
 
-```elif board.board_id in ("your_board_id"):
+```
+elif board.board_id in ("your_board_id"):
     MESSAGE="Press A button."
     SCALE=3
     NO_BUTTON = False
     NO_BUTTON_DELAY = 30
     BUTTON_PIN = board.BUTTON_A
     PY_GAMER=False
-
+```
 If you want a new board to be supported, don't hesitate to create an issue for a specific board, if I have that in stock I might make a version that work for you. If you can create the code for your own board, please try submitting it here as a PR so that is can serve other user.
 
 # Install
 
-You wil need the folowing files from this repository:
+You will need the folowing files from this repository:
 * boot.py This define a simple mouse USB HID description that is recognized by the Nintendo Switch
 * code.py This is the main code with board detection
 * mouseto.py Library to handled absolute mouse move like an Arduino library with same name is doing
