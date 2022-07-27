@@ -27,7 +27,7 @@ The best way to have support is to add a section in the board detection and sele
     NO_BUTTON = False
     NO_BUTTON_DELAY = 30
     BUTTON_PIN = board.BUTTON_A
-    PY_GAMER=False```
+    PY_GAMER=False
 
 If you want a new board to be supported, don't hesitate to create an issue for a specific board, if I have that in stock I might make a version that work for you. If you can create the code for your own board, please try submitting it here as a PR so that is can serve other user.
 
