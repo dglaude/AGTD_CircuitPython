@@ -5,11 +5,12 @@
 # The common things those board have is a screen and at least one button.
 # The code will wait for the right button to be pressed before acting as a mouse.
 # Here is the selected button and the supported board:
-#D9 (Start)	"pygamer"
-#BUTTON_A	"clue_nrf52840_express"
-#BUTTON_OK	"espressif_esp32s3_usb_otg_n8"
-#BUTTON (boot)	"adafruit_feather_esp32s3_tft"
-#???    "seeeduino_wio_terminal"
+#   "pygamer" => MESSAGE="Press start."
+#   "clue_nrf52840_express" => MESSAGE="Press A button."
+#   "espressif_esp32s3_usb_otg_n8" => MESSAGE="Press OK button."
+#   "adafruit_feather_esp32s3_tft" => MESSAGE="Press button."
+#   "seeeduino_wio_terminal" => MESSAGE="Press the top left button to start."
+#   "pimoroni_interstate75" => MESSAGE="Press the SW_A button to start."
 #
 # It should be easy to port this to other board, just adding the detection code and selecting the button to use.
 #
@@ -94,6 +95,7 @@ if board.board_id in ("pygamer"):
     NO_BUTTON_DELAY = 30
     BUTTON_PIN = board.D9
     PY_GAMER=True       # Special button on PyGamer
+    mydisplay = board.DISPLAY
 elif board.board_id in ("clue_nrf52840_express"):
     MESSAGE="Press A button."
     SCALE=3
@@ -101,6 +103,7 @@ elif board.board_id in ("clue_nrf52840_express"):
     NO_BUTTON_DELAY = 30
     BUTTON_PIN = board.BUTTON_A
     PY_GAMER=False
+    mydisplay = board.DISPLAY
 elif board.board_id in ("espressif_esp32s3_usb_otg_n8"):
     MESSAGE="Press OK button."
     SCALE=3
@@ -108,6 +111,7 @@ elif board.board_id in ("espressif_esp32s3_usb_otg_n8"):
     NO_BUTTON_DELAY = 30
     BUTTON_PIN = board.BUTTON_OK
     PY_GAMER=False
+    mydisplay = board.DISPLAY
 elif board.board_id in ("adafruit_feather_esp32s3_tft"):
     MESSAGE="Press button."
     SCALE=2
@@ -115,6 +119,7 @@ elif board.board_id in ("adafruit_feather_esp32s3_tft"):
     NO_BUTTON_DELAY = 30
     BUTTON_PIN = board.BUTTON
     PY_GAMER=False
+    mydisplay = board.DISPLAY
 elif board.board_id in ("seeeduino_wio_terminal"):
     MESSAGE="Press the top left button to start."
     SCALE=3
@@ -122,6 +127,24 @@ elif board.board_id in ("seeeduino_wio_terminal"):
     NO_BUTTON_DELAY = 30
     BUTTON_PIN = board.BUTTON_3
     PY_GAMER=False
+    mydisplay = board.DISPLAY
+elif board.board_id in ("pimoroni_interstate75"): # assume you have a 64x64 LED Matrix
+    MESSAGE="Press the SW_A button to start."
+    SCALE=1
+    NO_BUTTON = False
+    NO_BUTTON_DELAY = 30
+    BUTTON_PIN = board.SW_A
+    PY_GAMER=False
+    import framebufferio
+    import rgbmatrix
+    # If there was a display before (protomatter, LCD, or E-paper), release it so we can create ours
+    displayio.release_displays()
+    matrix = rgbmatrix.RGBMatrix(
+        width=64, height=64, bit_depth=6,
+        rgb_pins=[board.R0, board.B0, board.G0, board.R1, board.B1, board.G1], # My matrix seems RBG not RGB
+        addr_pins=[board.ROW_A, board.ROW_B, board.ROW_C, board.ROW_D, board.ROW_E],
+        clock_pin=board.CLK, latch_pin=board.LAT, output_enable_pin=board.OE)
+    mydisplay = framebufferio.FramebufferDisplay(matrix, auto_refresh=True)
 else:
     print("Your board " + board.board_id + " is not supported yet, let's trigger an exception.")
     print(42/0)
@@ -191,10 +214,10 @@ def DisplayImage():
         for x in range(64):
             bitmap[x, y] = image[my_index]
             my_index += 1
-    lcd = board.DISPLAY
+    lcd = mydisplay
     screen = displayio.Group(scale = SCALE)
-    centerx = (( board.DISPLAY.width - 64*SCALE ) // 2) // SCALE
-    centery = (( board.DISPLAY.height - 64*SCALE ) // 2) // SCALE
+    centerx = (( lcd.width - 64*SCALE ) // 2) // SCALE
+    centery = (( lcd.height - 64*SCALE ) // 2) // SCALE
     bg = displayio.TileGrid(bitmap, pixel_shader=palette, x=centerx, y=centery)
     screen.append(bg)
     lcd.show(screen)
@@ -241,9 +264,9 @@ def setup():                                ### void setup(void) {
             while button.value:
                 led.value = not led.value
                 time.sleep(0.2)                                 ###     delay(500);
-        print("It will start in 30 seconds.")
+        print("It will start in 3 seconds.")
         led.value = True
-        time.sleep(30)
+        time.sleep(3)
         led.value = False
         print("Starting.")
 ###   }
@@ -467,6 +490,7 @@ add_GTD_file("")
 print(list_image)
 
 setup()                                             ### Arduino
+#DisplayAllImage()
 loop()                                              ### Arduino
 
 while True:                                         ###   while(1) {
