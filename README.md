@@ -13,8 +13,10 @@ Current release is working on many different board with different MCU and screen
 * [espressif_esp32s3_usb_otg_n8](https://circuitpython.org/board/espressif_esp32s3_usb_otg_n8/)
 * [adafruit_feather_esp32s3_tft](https://circuitpython.org/board/adafruit_feather_esp32s3_tft/)
 * [seeeduino_wio_terminal](https://circuitpython.org/board/seeeduino_wio_terminal/)
+* [pimoroni_interstate75](https://circuitpython.org/board/pimoroni_interstate75/)
 
-My test are mostly done on "CircuitPython 8.0.0-alpha.1" or on the bleeding edge version of CircuitPython, but it should work on CircuitPython 7.3.1 if available for your board.
+My test are mostly done on "CircuitPython 8.0.0-alpha.1".
+In particular for interstate75 you need a version above 8.0.0-alpha.1 so take the bleeding edge version of CircuitPython.
 
 # Customize the code for other board
 
@@ -29,6 +31,7 @@ elif board.board_id in ("your_board_id"):
     NO_BUTTON_DELAY = 30
     BUTTON_PIN = board.BUTTON_A
     PY_GAMER=False
+    mydisplay = board.DISPLAY
 ```
 If you want a new board to be supported, don't hesitate to create an issue for a specific board, if I have that in stock I might make a version that work for you. If you can create the code for your own board, please try submitting it here as a PR so that is can serve other user.
 
